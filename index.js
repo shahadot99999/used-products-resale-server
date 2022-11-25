@@ -27,10 +27,19 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 async function run(){
     try{
+        
         const appointmentOptionCollection = client.db('resaleproduct').collection('appleservices');
+        const bookingCollection = client.db('resaleproduct').collection('bookings');
         const appointmentOptionCollection1 = client.db('resaleproduct').collection('xiaomiservices');
         const appointmentOptionCollection2 = client.db('resaleproduct').collection('oneplusservice');
 
+        app.post('/bookings', async(req, res)=>{
+            const booking = req.body
+            console.log(booking);
+            const result = await bookingCollection.insertOne(booking);
+            res.send(result);
+        })
+        
         app.get('/appleservices', async(req, res)=>{
            // console.log(appleservices);
             const query={};
