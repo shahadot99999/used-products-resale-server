@@ -28,6 +28,8 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run(){
     try{
         const appointmentOptionCollection = client.db('resaleproduct').collection('appleservices');
+        const appointmentOptionCollection1 = client.db('resaleproduct').collection('xiaomiservices');
+        const appointmentOptionCollection2 = client.db('resaleproduct').collection('oneplusservice');
 
         app.get('/appleservices', async(req, res)=>{
            // console.log(appleservices);
@@ -35,6 +37,20 @@ async function run(){
             const optiions= await appointmentOptionCollection.find(query).toArray();
             res.send(optiions)
         })
+
+        app.get('/xiaomiservices', async(req, res)=>{
+            // console.log(appleservices);
+             const query={};
+             const optiions= await appointmentOptionCollection1.find(query).toArray();
+             res.send(optiions)
+         })
+
+         app.get('/oneplusservice', async(req, res)=>{
+            // console.log(appleservices);
+             const query={};
+             const optiions= await appointmentOptionCollection1.find(query).toArray();
+             res.send(optiions)
+         })
     }
     finally{
 
