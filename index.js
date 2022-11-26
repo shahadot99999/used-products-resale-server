@@ -35,15 +35,31 @@ async function run(){
 
         app.post('/bookings', async(req, res)=>{
             const booking = req.body
-            console.log(booking);
+            //console.log(booking);
             const result = await bookingCollection.insertOne(booking);
             res.send(result);
         })
         
         app.get('/appleservices', async(req, res)=>{
            // console.log(appleservices);
+           const date = req.query.date;
+           //console.log(date);
             const query={};
             const optiions= await appointmentOptionCollection.find(query).toArray();
+           
+            //booking prov
+            const bookingQuery = {booking: date}
+            const alreadyBooked= await bookingCollection.find(bookingQuery).toArray();
+           
+            //code carefully
+            optiions.forEach(optiion =>{
+                const optiionBooked = alreadyBooked.filter(book => book.title=== optiion.title
+                    );
+                    const bookedSlots = optiionBooked.map(book=>book.slot)
+                   const remainingSlots = optiion.slots.filter(slot=> !bookedSlots.includes(slot))
+                   optiion.slots= remainingSlots; 
+                   console.log(optiion.title, remainingSlots.length)
+            })
             res.send(optiions)
         })
 
