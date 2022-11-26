@@ -30,6 +30,8 @@ async function run(){
         
         const appointmentOptionCollection = client.db('resaleproduct').collection('appleservices');
         const bookingCollection = client.db('resaleproduct').collection('bookings');
+        const usersCollection = client.db('resaleproduct').collection('users');
+
         const appointmentOptionCollection1 = client.db('resaleproduct').collection('xiaomiservices');
         const appointmentOptionCollection2 = client.db('resaleproduct').collection('oneplusservice');
 
@@ -47,6 +49,8 @@ async function run(){
             const result = await bookingCollection.insertOne(booking);
             res.send(result);
         })
+
+       
         
         app.get('/appleservices', async(req, res)=>{
            // console.log(appleservices);
@@ -83,7 +87,16 @@ async function run(){
              const query={};
              const optiions= await appointmentOptionCollection1.find(query).toArray();
              res.send(optiions)
-         })
+         });
+
+         app.post('/users', async(req, res)=>{
+            const user = req.body;
+            console.log(user);
+            const result = await usersCollection.insertOne(user);
+            res.send(result);
+        })
+
+
     }
     finally{
 
